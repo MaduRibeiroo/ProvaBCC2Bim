@@ -1,4 +1,5 @@
 import TelaCadastroUsuario from "./componentes/telas/TelaCadastroUsuario";
+import TelaCadastroMensagem from "./componentes/telas/TelaCadastroMensagem";
 import TelaMenu from "./componentes/telas/TelaMenu";
 import Tela404 from "./componentes/telas/Tela404";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

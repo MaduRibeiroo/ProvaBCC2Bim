@@ -1,7 +1,6 @@
 import { Alert, Button, Container, Spinner, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { buscarMensagens, apagarMensagem } from "../../../redux"
-import { buscarUsuarios, apagarUsuario } from "../../../redux/usuarioReducer"
+import { buscarMensagens, apagarMensagem } from "../../../redux/mensagemReducer"
 import { useEffect } from "react";
 
 import ESTADO from "../../../redux/estado";
