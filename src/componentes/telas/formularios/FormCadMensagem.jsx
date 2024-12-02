@@ -1,20 +1,19 @@
 import { Button, Spinner, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import { gravarUsuario } from '../../../servicos/ServicoUsuario';
+import { gravarMensagem} from "../../../servicos/servicoMensagem";
 
 import toast, {Toaster} from 'react-hot-toast';
 
-export default function FormCadUsuario(props) {
-    const [usuario, setUsuario] = useState(props.usuarioSelecionado);
+export default function FormCadMensagem(props) {
+    const [mensagem, setMensagem] = useState(props.mensagemSelecionado);
     const [formValidado, setFormValidado] = useState(false);
-    
 
     function manipularSubmissao(evento) {
         const form = evento.currentTarget;
         if (form.checkValidity()) {
 
             if (!props.modoEdicao) {
-                gravarUsuario(usuario)
+                gravarMensagem(mensagem)
                 .then((resultado)=>{
                     if (resultado.status){
                         props.setExibirTabela(true);
@@ -25,18 +24,16 @@ export default function FormCadUsuario(props) {
                 });
             }
             else {
-                props.setListaDeUsuarios(props.listaDeUsuarios.map((aux) => {
-                    if (aux.id !== usuario.id)
+                props.setListaDeMensagens(props.listaDeMensagens.map((aux) => {
+                    if (aux.data !== mensagem.data)
                         return aux
                     else
-                        return usuario
+                        return mensagem
                 }));
                 props.setModoEdicao(false);
-                props.setUsuarioSelecionado({
-                    id: 0,
-                    nickname: "",
-                    urlImagem: "",
-                    senha: ""
+                props.setMensagemSelecionado({
+                    info: "",
+                    data: ""
                 });
                 props.setExibirTabela(true);
             }
@@ -53,69 +50,42 @@ export default function FormCadUsuario(props) {
     function manipularMudanca(evento) {
         const elemento = evento.target.name;
         const valor = evento.target.value;
-        setUsuario({ ...usuario, [elemento]: valor });
+        setMensagem({ ...mensagem, [elemento]: valor });
     }
 
     return (
         <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
             <Row className="mb-4">
                 <Form.Group as={Col} md="4">
-                    <Form.Label>ID:</Form.Label>
+                    <Form.Label>Mensagem:</Form.Label>
                     <Form.Control
                         required
                         type="text"
-                        id="id"
-                        name="id"
-                        value={usuario.id}
+                        id="info"
+                        name="info"
+                        value={mensagem.info}
                         disabled={props.modoEdicao}
                         onChange={manipularMudanca}
                     />
-                    <Form.Control.Feedback type='invalid'>Por favor, informe o id!</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Por favor, informe a mensagem!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
             <Row className="mb-4">
                 <Form.Group as={Col} md="4">
-                    <Form.Label>Nickname</Form.Label>
+                    <Form.Label>Hora</Form.Label>
                     <Form.Control
                         required
-                        type="text"
-                        id="nickname"
-                        name="nickname"
-                        value={usuario.nickname}
+                        type="time"
+                        id="hora"
+                        name="hora"
+                        value={mensagem.hora}
                         disabled={props.modoEdicao}
                         onChange={manipularMudanca}
                     />
-                    <Form.Control.Feedback type='invalid'>Por favor, informe o seu nickname!</Form.Control.Feedback>
+                    <Form.Control.Feedback type='invalid'>Por favor, informe a hora!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
-            <Row className="mb-4">
-                <Form.Group as={Col} md="12">
-                    <Form.Label>Imagem:</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="url"
-                        name="url"
-                        value={usuario.url}
-                        onChange={manipularMudanca}
-                    />
-                    <Form.Control.Feedback type="invalid">Por favor, informe a url da foto!</Form.Control.Feedback>
-                </Form.Group>
-            </Row>
-            <Row className="mb-4">
-                <Form.Group as={Col} md="4">
-                    <Form.Label>Senha:</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="senha"
-                        name="senha"
-                        value={usuario.senha}
-                        onChange={manipularMudanca}
-                    />
-                    <Form.Control.Feedback type="invalid">Por favor, informe a senha!</Form.Control.Feedback>
-                </Form.Group>
-            </Row>
+            
             <Row className='mt-2 mb-2'>
                 <Col md={1}>
                 <Button type="submit">{props.modoEdicao ? "Alterar" : "Confirmar"}</Button>

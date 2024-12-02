@@ -4,7 +4,7 @@ import Tela404 from "./componentes/telas/Tela404";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TelaLogin from "./componentes/telas/TelaLogin";
 import { useState, createContext } from 'react';
-import store from "./redux/Store";
+import store from "./redux/store";
 import { Provider } from "react-redux";
 
 export const ContextoUsuario = createContext();
@@ -33,7 +33,7 @@ function App() {
               }
               <Routes>
                 <Route path="/usuario" element={<TelaCadastroUsuario />} />
-                <Route path="/mensagem" element={<TelaMensagem />} />
+                <Route path="/mensagem" element={<TelaCadastroMensagem />} />
                 <Route path="/" element={<TelaMenu />} />
                 <Route path="*" element={<Tela404 />} />
               </Routes>

@@ -1,4 +1,4 @@
-import Menu from "./menu";
+import Menu from "./Menu";
 import Cabecalho from "./Cabecalho";
 import { Container } from "react-bootstrap";
 

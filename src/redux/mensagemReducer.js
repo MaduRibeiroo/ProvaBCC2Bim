@@ -1,25 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { consultarUsuario, excluirUsuario } from "../servicos/ServicoUsuario";
+import { consultarMensagem, excluirMensagem } from "../servicos/servicoMensagem";
 
 import ESTADO from "./estado";
 
-export const buscarUsuarios = createAsyncThunk('buscarUsuarios', async ()=>{
-    const resultado = await consultarUsuario();
+export const buscarMensagens = createAsyncThunk('buscarMensagens', async ()=>{
+    const resultado = await consultarMensagem();
     try {
         if (Array.isArray(resultado)){
             return {
                 "status":true,
-                "mensagem":"Usuario recuperados com sucesso",
-                "listaDeUsuarios":resultado
+                "mensagem":"Mensagem recuperados com sucesso",
+                "listaDemensagens":resultado
             }
         }
         else
         {
             return {
                 "status":false,
-                "mensagem":"Erro ao recuperar os usuarios do backend.",
-                "listaDeUsuarios":[]
+                "mensagem":"Erro ao recuperar as mensagens do backend.",
+                "listaDeMensagens":[]
             }
         }
     }
@@ -27,14 +27,14 @@ export const buscarUsuarios = createAsyncThunk('buscarUsuarios', async ()=>{
         return {
             "status":false,
             "mensagem":"Erro: " + erro.message,
-            "listaDeUsuarios":[]
+            "listaDeMensagens":[]
         }
     }
 });
 
-export const apagarUsuario = createAsyncThunk('apagarUsuario', async (usuario)=>{
-    console.log(usuario);
-    const resultado = await excluirUsuario(usuario);
+export const apagarMensagem = createAsyncThunk('apagarMensagem', async (mensagem)=>{
+    console.log(mensagem);
+    const resultado = await excluirMensagem(mensagem);
     console.log(resultado);
     try {
             return {
@@ -50,49 +50,49 @@ export const apagarUsuario = createAsyncThunk('apagarUsuario', async (usuario)=>
     } 
 });
 
-const usuarioReducer = createSlice({
-    name:'user',
+const mensagemReducer = createSlice({
+    name:'mensa',
     initialState:{
         estado: ESTADO.OCIOSO,
         mensagem:"",
-        listaDeUsuarios:[]
+        listaDeMensagens:[]
     },
     reducers:{},
     extraReducers:(builder)=> {
-        builder.addCase(buscarUsuarios.pending, (state, action) =>{
+        builder.addCase(buscarMensagens.pending, (state, action) =>{
             state.estado=ESTADO.PENDENTE
-            state.mensagem="Processando requisição (buscando usuarios)"
+            state.mensagem="Processando requisição (buscando mensagens)"
         })
-        .addCase(buscarUsuarios.fulfilled, (state, action) =>{
+        .addCase(buscarMensagens.fulfilled, (state, action) =>{
           if (action.payload.status){
             state.estado=ESTADO.OCIOSO;
             state.mensagem=action.payload.mensagem;
-            state.listaDeUsuarios=action.payload.listaDeUsuarios;
+            state.listaDeMensagens=action.payload.listaDeMensagens;
           } 
           else{
             state.estado=ESTADO.ERRO;
             state.mensagem = action.payload.mensagem;
-            state.listaDeUsuarios=action.payload.listaDeUsuarios;
+            state.listaDeMensagens=action.payload.listaDeMensagens;
           } 
         })
-        .addCase(buscarUsuarios.rejected, (state, action) =>{
+        .addCase(buscarMensagens.rejected, (state, action) =>{
             state.estado=ESTADO.ERRO;
             state.mensagem = action.payload.mensagem;
-            state.listaDeUsuarios=action.payload.listaDeUsuarios;
+            state.listaDeMensagens=action.payload.listaDeMensagens;
         })
-        .addCase(apagarUsuario.pending, (state,action) =>{
+        .addCase(apagarMensagem.pending, (state,action) =>{
             state.estado=ESTADO.PENDENTE;
             state.mensagem=action.payload.mensagem;
         })
-        .addCase(apagarUsuario.fulfilled,(state,action) =>{
+        .addCase(apagarMensagem.fulfilled,(state,action) =>{
             state.estado=ESTADO.OCIOSO;
             state.mensagem=action.payload.mensagem;
         })
-        .addCase(apagarUsuario.rejected,(state,action)=>{
+        .addCase(apagarMensagem.rejected,(state,action)=>{
             state.estado=ESTADO.ERRO;
             state.mensagem=""
         })
     }
 });
 
-export default usuarioReducer.reducer;
+export default mensagemReducer.reducer;

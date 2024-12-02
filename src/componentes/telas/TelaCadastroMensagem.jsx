@@ -1,17 +1,15 @@
 import { Alert } from "react-bootstrap";
-import FormCadUsuario from "./formularios/FormCadUsuario";
+import FormCadMensagem from "./formularios/FormCadMensagem";
 import Pagina from "../layouts/Pagina";
 import { useState } from "react";
-import TabelaCadUsuario from "./tabelas/TabelaUsuarios"
+import TabelaMensagem from "./tabelas/TabelaMensagem";
 
-export default function TelaCadastroUsuario(props) {
+export default function TelaCadastroMensagem(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
     const [modoEdicao, setModoEdicao] = useState(false);
-    const [usuarioSelecionado, setUsuarioSelecionado] = useState({
-        id: 0,
-        nickname:"",
-        urlImagem:"",
-        senha:"",
+    const [mensagemSelecionado, setMensagemSelecionado] = useState({
+        info: "",
+        hora: ""
     });
 
     return (
@@ -19,17 +17,17 @@ export default function TelaCadastroUsuario(props) {
             <Pagina>
                 |<Alert className="mt-02 mb-02 success text-center" variant="success">
                     <h2>
-                        Cadastro do Usuario
+                        Enviar mensagem
                     </h2>
                 </Alert>
                 {
                     exibirTabela ?
-                        <TabelaCadUsuario setExibirTabela={setExibirTabela}
+                        <TabelaMensagem setExibirTabela={setExibirTabela}
                                         setModoEdicao={setModoEdicao}
-                                        setUsuarioSelecionado={setUsuarioSelecionado} /> :
-                        <FormCadUsuario setExibirTabela={setExibirTabela}
-                                         usuarioSelecionado={usuarioSelecionado}
-                                         setUsuarioSelecionado={setUsuarioSelecionado}
+                                        setMensagemSelecionado={setMensagemSelecionado} /> :
+                        <FormCadMensagem setExibirTabela={setExibirTabela}
+                                         mensagemSelecionado={mensagemSelecionado}
+                                         setMensagemSelecionado={setMensagemSelecionado}
                                          modoEdicao={modoEdicao}
                                          setModoEdicao={setModoEdicao}/>
                 }
