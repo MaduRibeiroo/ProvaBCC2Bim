@@ -1,7 +1,7 @@
 {
   "name": "sistema",
   "version": "0.1.0",
-  "homepage": "https://github.com/MaduRibeiroo/ProvaBCC2Bim.git",
+  "homepage": "https://MaduRIbeiroo.github.io/ProvaBCC2Bim",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
